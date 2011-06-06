@@ -1,15 +1,16 @@
 (function() {
     _.extend(term.commands, {
         look: function(args) {
-            if (!args)  {
+            if (!args.length)  {
                 return game.character.look();
-            } else {
-                return game.describeObject(args[1]);
+            } else if (args[0] === 'at') {
+                var objString = _.tail(args).join(' ');
+                return game.objects[objString].describe();
             }
         },
 
-        l: function() {
-            return term.commands.look();
+        l: function(args) {
+            return term.commands.look(args);
         },
 
         north: function() {
@@ -51,6 +52,16 @@
         i: function() {
             return term.commands.inventory().join('\n');
         },
+
+        open: function(args) {
+            return game.character.open(args);
+        },
+
+        o: function(args) {
+            return term.commands.open(args);
+        },
+
+        
         
     });
 })()
